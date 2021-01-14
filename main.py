@@ -8,22 +8,21 @@ from pathlib import Path
 try:
     os.mkdir("Input")
 except OSError:
-    print("Failed directories creation or directories already exists")
+    print("Failed Input directory creation or directory already exists")
 else:
-    print("Directories created")
+    print("Directory Input created")
 try:
     os.mkdir("Output")
 except OSError:
-    print("Failed directories creation or directories already exists")
+    print("Failed Output directory creation or directory already exists")
 else:
-    print("Directories created")
+    print("Directory Output created")
 
 # get names of files in Input folder
 onlyfiles = [f for f in listdir("Input") if isfile(join("Input", f))]
 
 # set the size of the image for telegram stickers
 max_side = 512
-
 
 # resize every file in Input folder and save in Output folder
 for file in onlyfiles:
@@ -39,8 +38,7 @@ for file in onlyfiles:
         size = width, height
     # get name without extension
     name = Path(file).stem
-    # resize the image
+    # resize the image use NEAREST if the image is pixelated (Ex: pixel art) or ANTIALIAS for smoother images
     img = img.resize(size, Image.NEAREST)
-    # save resized image
+    # save resized image in .png to mantain transparency
     img.save("Output/" + name + ".png", "PNG")
-
